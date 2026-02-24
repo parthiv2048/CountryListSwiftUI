@@ -41,6 +41,8 @@ struct CountryListView: View {
     }
 }
 
+// MARK: Country List Cell View
+
 struct CountryView: View {
     var country: CountryData?
     

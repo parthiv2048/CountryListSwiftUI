@@ -9,11 +9,19 @@ struct CurrencyData: Decodable {
     var code: String?
     var name: String?
     var symbol: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case code, name, symbol
+    }
 }
 
 struct LanguageData: Decodable {
     var code: String?
     var name: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case code, name
+    }
 }
 
 struct CountryData: Decodable {
@@ -24,4 +32,8 @@ struct CountryData: Decodable {
     var language: LanguageData?
     var name: String?
     var region: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case capital, code, currency, flag, language, name, region
+    }
 }
