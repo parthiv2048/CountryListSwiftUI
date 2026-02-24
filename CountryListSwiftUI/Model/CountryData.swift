@@ -30,7 +30,7 @@ struct LanguageData: Decodable {
 
 struct CountryData: Decodable, Identifiable {
     /// id is not a part of the API response, which is why it's initialized here
-    var id = UUID()
+    let id = UUID()
     
     var capital: String?
     var code: String?
