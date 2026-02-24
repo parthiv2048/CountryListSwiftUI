@@ -5,13 +5,17 @@
 //  Created by Parthiv Ganguly on 2/23/26.
 //
 
+import SwiftUI
+
 struct CurrencyData: Decodable {
     var code: String?
     var name: String?
     var symbol: String?
     
     enum CodingKeys: String, CodingKey {
-        case code, name, symbol
+        case code
+        case name
+        case symbol
     }
 }
 
@@ -24,7 +28,10 @@ struct LanguageData: Decodable {
     }
 }
 
-struct CountryData: Decodable {
+struct CountryData: Decodable, Identifiable {
+    /// id is not a part of the API response, which is why it's initialized here
+    var id = UUID()
+    
     var capital: String?
     var code: String?
     var currency: CurrencyData?

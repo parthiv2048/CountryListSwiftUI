@@ -9,17 +9,19 @@ import SwiftUI
 
 protocol CountryListViewModelProtocol {
     func fetchCountries() async
-    func numberOfCountries() -> Int
-    func countryAt(index: Int) -> CountryData?
+    func getCountries() -> [CountryData]?
     func filterCountries(searchText: String)
 }
 
 @Observable
 class CountryListVM: CountryListViewModelProtocol {
+    
+    private var networkManager: NetworkManagerProtocol?
     private var countryList: [CountryData]?
     private var filteredCountryList: [CountryData]?
     
-    init(countryList: [CountryData]? = []) {
+    init(networkManager: NetworkManagerProtocol? = nil, countryList: [CountryData]? = nil) {
+        self.networkManager = networkManager
         self.countryList = countryList
         self.filteredCountryList = countryList
     }
@@ -27,19 +29,12 @@ class CountryListVM: CountryListViewModelProtocol {
     // MARK: Fetch Countries using Network Manager
     
     func fetchCountries() async {
-        countryList = await NetworkManager.fetchCountries(url: Server.countryListURL.rawValue)
+        countryList = await self.networkManager?.fetchCountries(url: Server.countryListURL.rawValue)
         filteredCountryList = countryList
     }
     
-    func numberOfCountries() -> Int {
-        return filteredCountryList?.count ?? 0
-    }
-    
-    func countryAt(index: Int) -> CountryData? {
-        if let filteredCountryList = filteredCountryList, index >= filteredCountryList.count {
-            return nil
-        }
-        return filteredCountryList?[index]
+    func getCountries() -> [CountryData]? {
+        return filteredCountryList
     }
     
     // MARK: Filter Countries according to search string

@@ -11,7 +11,7 @@ import SwiftUI
 struct CountryListSwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            CountryListView(countryListVM: CountryListVM())
+            CountryListView(countryListVM: CountryListVM(networkManager: NetworkManager.shared))
         }
     }
 }

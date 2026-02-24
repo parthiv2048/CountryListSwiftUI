@@ -24,8 +24,8 @@ struct CountryListView: View {
                 .padding()
             
             List {
-                ForEach(0..<(countryListVM?.numberOfCountries() ?? 0), id: \.self) { index in
-                    CountryView(country: countryListVM?.countryAt(index: index))
+                ForEach(countryListVM?.getCountries() ?? []) { country in
+                    CountryRowView(country: country)
                 }
             }
             .searchable(text: $searchText, prompt: LabelText.searchPlaceholder.rawValue)
@@ -37,25 +37,6 @@ struct CountryListView: View {
         }
         .task {
             await countryListVM?.fetchCountries()
-        }
-    }
-}
-
-// MARK: Country List Cell View
-
-struct CountryView: View {
-    var country: CountryData?
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            HStack(alignment: .top) {
-                Text("\(country?.name ?? ""), \(country?.region ?? "")")
-                    .fontWeight(.semibold)
-                Spacer()
-                Text(country?.code ?? "")
-                    .foregroundColor(.blue)
-            }
-            Text(country?.capital ?? "")
         }
     }
 }

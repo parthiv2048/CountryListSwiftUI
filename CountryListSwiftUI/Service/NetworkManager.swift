@@ -8,14 +8,18 @@
 import SwiftUI
 
 protocol NetworkManagerProtocol {
-    static func fetchCountries(url: String) async -> [CountryData]
+    func fetchCountries(url: String) async -> [CountryData]
 }
 
-struct NetworkManager: NetworkManagerProtocol {
+class NetworkManager: NetworkManagerProtocol {
+    /// Use Singleton pattern to provide shared global access to NetworkManager
+    static let shared = NetworkManager()
+    
+    init() {}
     
     // MARK: Fetch Countries from Server
     
-    static func fetchCountries(url: String) async -> [CountryData] {
+    func fetchCountries(url: String) async -> [CountryData] {
         guard let serverURL = URL(string: url) else {
             print("Log: Invalid URL")
             return []
